@@ -63,12 +63,14 @@ class _MyHomePageState extends State<MyHomePage> {
       title: 'Conta de Luz',
       value: 211.30,
       date: DateTime.now().subtract(const Duration(days: 4)),
-    ),
+     ),
   ];
 
   List<Transaction> get _recentTransactions {
     return _transactions.where((tr) {
-      return tr.date.isAfter(DateTime.now().subtract(const Duration(days: 7)));
+      return tr.date.isAfter(DateTime.now().subtract(
+        const Duration(days: 7)
+      ));
     }).toList();
   }
 
@@ -103,10 +105,8 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
-          'Despesas Pessoais',
-        ),
-        actions: <Widget>[
+        title: const Text('Despesas Pessoais',),
+        actions: [
           IconButton(
             onPressed: () => _openTransactionFormModal(context),
             icon: const Icon(Icons.add),
