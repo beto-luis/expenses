@@ -17,8 +17,8 @@ class Chart extends StatelessWidget {
 
       for (var i = 0; i < recentTransaction.length; i++) {
         bool sameDay = recentTransaction[i].date.day == weekDay.day;
-        bool sameMonth = recentTransaction[i].date.month == weekDay.day;
-        bool sameYear = recentTransaction[i].date.year == weekDay.day;
+        bool sameMonth = recentTransaction[i].date.month == weekDay.month;
+        bool sameYear = recentTransaction[i].date.year == weekDay.year;
 
         if (sameDay && sameMonth && sameYear) {
           totalSum += recentTransaction[i].value;
@@ -44,14 +44,21 @@ class Chart extends StatelessWidget {
     return Card(
         elevation: 6,
         margin: const EdgeInsets.all(20),
-        child: Row(
-          children: groupedTransaction.map((tr) {
-            return ChartBar(
-              label: tr['day'] as String,
-              value: tr['value'] as double,
-              percentage: _weekTotalValue == 0 ? 0 : (tr['value'] as double) / _weekTotalValue,
-            );
-          }).toList(),
+        child: Padding(
+          padding: const EdgeInsets.all(10),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: groupedTransaction.map((tr) {
+              return Flexible(
+                fit: FlexFit.tight,
+                child: ChartBar(
+                  label: tr['day'] as String,
+                  value: tr['value'] as double,
+                  percentage: _weekTotalValue == 0 ? 0 : (tr['value'] as double) / _weekTotalValue,
+                ),
+              );
+            }).toList(),
+          ),
         ));
   }
 }
