@@ -64,6 +64,18 @@ class _MyHomePageState extends State<MyHomePage> {
       value: 211.30,
       date: DateTime.now().subtract(const Duration(days: 4)),
      ),
+      Transaction(
+      id: 't3',
+      title: 'Cartão de Crédito',
+      value: 1000265.00,
+      date: DateTime.now().subtract(const Duration(days: 33)),
+    ),
+     Transaction(
+      id: 't4',
+      title: 'Lanche',
+      value: 11.30,
+      date: DateTime.now().subtract(const Duration(days: 33)),
+    ),
   ];
 
   List<Transaction> get _recentTransactions {
