@@ -21,12 +21,12 @@ class ExpensesApp extends StatelessWidget {
           ),
           fontFamily: 'Quicksand',
           textTheme: ThemeData.light().textTheme.copyWith(
-                  titleLarge: const TextStyle(
-                fontFamily: 'OpenSans',
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
+                titleLarge: const TextStyle(
+                  fontFamily: 'OpenSans',
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
-            ),
           appBarTheme: AppBarTheme(
               titleTextStyle:
                   ThemeData.light().appBarTheme.titleTextStyle?.copyWith(
@@ -46,56 +46,24 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  final List<Transaction> _transactions = [
-    Transaction(
-      id: 't0',
-      title: 'Conta Antiga',
-      value: 400.00,
-      date: DateTime.now().subtract(const Duration(days: 33)),
-    ),
-    Transaction(
-      id: 't1',
-      title: 'Novo Tênis de Corrida',
-      value: 310.76,
-      date: DateTime.now().subtract(const Duration(days: 3)),
-    ),
-    Transaction(
-      id: 't2',
-      title: 'Conta de Luz',
-      value: 211.30,
-      date: DateTime.now().subtract(const Duration(days: 4)),
-     ),
-      Transaction(
-      id: 't3',
-      title: 'Cartão de Crédito',
-      value: 1000265.00,
-      date: DateTime.now().subtract(const Duration(days: 1)),
-    ),
-     Transaction(
-      id: 't4',
-      title: 'Lanche',
-      value: 11.30,
-      date: DateTime.now().subtract(const Duration(days: 1)),
-    ),
-  ];
+  final List<Transaction> _transactions = [];
 
   List<Transaction> get _recentTransactions {
     return _transactions.where((tr) {
-      return tr.date.isAfter(DateTime.now().subtract(
-        const Duration(days: 7)
-      ));
+      return tr.date.isAfter(DateTime.now().subtract(const Duration(days: 7)));
     }).toList();
   }
 
   _addTransaction(
     String title,
     double value,
+    DateTime date,
   ) {
     final newTransaction = Transaction(
       id: Random().nextDouble().toString(),
       title: title,
       value: value,
-      date: DateTime.now(),
+      date: date,
     );
 
     setState(() {
@@ -103,6 +71,12 @@ class _MyHomePageState extends State<MyHomePage> {
     });
 
     Navigator.of(context).pop();
+  }
+
+  _removeTransaction(String id) {
+    setState(() {
+      _transactions.removeWhere((tr) => tr.id == id);
+    });
   }
 
   _openTransactionFormModal(BuildContext context) {
@@ -118,7 +92,9 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Despesas Pessoais',),
+        title: const Text(
+          'Despesas Pessoais',
+        ),
         actions: [
           IconButton(
             onPressed: () => _openTransactionFormModal(context),
@@ -131,7 +107,7 @@ class _MyHomePageState extends State<MyHomePage> {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Chart(_recentTransactions),
-            TransactionList(_transactions),
+            TransactionList(_transactions, _removeTransaction),
           ],
         ),
       ),
