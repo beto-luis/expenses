@@ -45,71 +45,78 @@ class _TransactionFormState extends State<TransactionForm> {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-        elevation: 5,
-        child: Padding(
-          padding: const EdgeInsets.all(10),
-          child: Column(
-            children: <Widget>[
-              TextField(
-                controller: _titleControler,
-                onSubmitted: (_) => _submitForm(),
-                decoration: const InputDecoration(
-                  labelText: 'Título',
+    return SingleChildScrollView(
+      child: Card(
+          elevation: 5,
+          child: Padding(
+            padding: EdgeInsets.only(
+              top: 10,
+              right: 10,
+              left: 10,
+              bottom: 10 + MediaQuery.of(context).viewInsets.bottom,
+            ),
+            child: Column(
+              children: <Widget>[
+                TextField(
+                  controller: _titleControler,
+                  onSubmitted: (_) => _submitForm(),
+                  decoration: const InputDecoration(
+                    labelText: 'Título',
+                  ),
                 ),
-              ),
-              TextField(
-                controller: _valueControler,
-                keyboardType:
-                    const TextInputType.numberWithOptions(decimal: true),
-                onSubmitted: (_) => _submitForm(),
-                decoration: const InputDecoration(
-                  labelText: 'Valor (R\$)',
+                TextField(
+                  controller: _valueControler,
+                  keyboardType:
+                      const TextInputType.numberWithOptions(decimal: true),
+                  onSubmitted: (_) => _submitForm(),
+                  decoration: const InputDecoration(
+                    labelText: 'Valor (R\$)',
+                  ),
                 ),
-              ),
-              SizedBox(
-                height: 70,
-                child: Row(
-                  children: <Widget>[
-                    Expanded(
-                      child: Text(
-                        _selectadeDate == (null)
-                            ? 'Nenhuma data selecionada!'
-                            : 'Data Selecionada: ${DateFormat('dd/MM/y').format(_selectadeDate!)}',
-                      ),
-                    ),
-                    TextButton(
-                      style: ButtonStyle(
-                          foregroundColor: MaterialStatePropertyAll(
-                              Theme.of(context).primaryColor)),
-                      onPressed: _showDatePicker,
-                      child: const Text(
-                        'Selecionar Data',
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
+                SizedBox(
+                  height: 70,
+                  child: Row(
+                    children: <Widget>[
+                      Expanded(
+                        child: Text(
+                          _selectadeDate == (null)
+                              ? 'Nenhuma data selecionada!'
+                              : 'Data Selecionada: ${DateFormat('dd/MM/y').format(_selectadeDate!)}',
                         ),
                       ),
+                      TextButton(
+                        style: ButtonStyle(
+                            foregroundColor: MaterialStatePropertyAll(
+                                Theme.of(context).primaryColor)),
+                        onPressed: _showDatePicker,
+                        child: const Text(
+                          'Selecionar Data',
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: <Widget>[
+                    ElevatedButton(
+                      style: ButtonStyle(
+                        backgroundColor: MaterialStatePropertyAll(
+                            Theme.of(context).primaryColor),
+                        foregroundColor:
+                            const MaterialStatePropertyAll(Colors.white),
+                      ),
+                      onPressed: _submitForm,
+                      child: const Text('Nova Transação'),
                     ),
                   ],
                 ),
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: <Widget>[
-                  ElevatedButton(
-                    style: ButtonStyle(
-                      backgroundColor: MaterialStatePropertyAll(
-                          Theme.of(context).primaryColor),
-                      foregroundColor:
-                          const MaterialStatePropertyAll(Colors.white),
-                    ),
-                    onPressed: _submitForm,
-                    child: const Text('Nova Transação'),
-                  ),
-                ],
-              ),
-            ],
-          ),
-        ));
+              ],
+            ),
+          )),
+    );
   }
 }
