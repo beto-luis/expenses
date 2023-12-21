@@ -90,8 +90,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
+    final appBar = AppBar(
         title: const Text(
           'Despesas Pessoais',
         ),
@@ -101,13 +100,25 @@ class _MyHomePageState extends State<MyHomePage> {
             icon: const Icon(Icons.add),
           )
         ],
-      ),
+      );
+    final availabelHeight = MediaQuery.of(context).size.height - 
+    appBar.preferredSize.height - 
+    MediaQuery.of(context).padding.top;
+
+    return Scaffold(
+      appBar: appBar,
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Chart(_recentTransactions),
-            TransactionList(_transactions, _removeTransaction),
+            SizedBox(
+              height: availabelHeight * 0.3,
+              child: Chart(_recentTransactions),
+              ),
+            SizedBox(
+              height: availabelHeight * 0.7,
+              child: TransactionList(_transactions, _removeTransaction),
+              ),
           ],
         ),
       ),
