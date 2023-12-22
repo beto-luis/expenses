@@ -1,8 +1,7 @@
 import 'package:expenses/components/transaction_form.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'dart:math';
-import './components/transactions_list.dart';
+import 'components/transaction_list.dart';
 import 'components/chart.dart';
 import '/models/transaction.dart';
 
@@ -93,8 +92,7 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     final mediaQuery = MediaQuery.of(context);
-    bool isLandscape =
-        mediaQuery.orientation == Orientation.landscape;
+    bool isLandscape = mediaQuery.orientation == Orientation.landscape;
 
     final appBar = AppBar(
       title: const Text(
